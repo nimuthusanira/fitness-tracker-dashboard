@@ -1,74 +1,228 @@
-/* Goal Input Style */
-.goal-setter {
+/* GLOBAL STYLES */
+.App {
+  text-align: center;
+  background-color: #0b0e11; /* Deep modern dark background */
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding: 20px;
+}
+
+.title {
+  font-size: 2.8rem;
+  letter-spacing: 4px;
+  font-weight: 800;
+  color: #00d2ff;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
   margin-bottom: 20px;
-  background: #222;
-  padding: 10px;
-  border-radius: 10px;
+}
+
+/* GOAL SETTER INPUT */
+.goal-setter {
+  background: #1c2128;
+  padding: 15px 25px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+  border: 1px solid #30363d;
   display: inline-block;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.goal-setter label {
+  font-weight: 600;
+  color: #8b949e;
+  margin-right: 10px;
 }
 
 .goal-setter input {
-  background: #333;
+  background: #0d1117;
   color: #00d2ff;
-  border: 1px solid #444;
-  padding: 5px;
-  border-radius: 5px;
-  width: 80px;
-  margin-left: 10px;
+  border: 2px solid #00d2ff;
+  padding: 8px;
+  border-radius: 8px;
+  width: 90px;
+  font-weight: bold;
+  text-align: center;
+  outline: none;
 }
 
-/* Modal Styling */
+/* THE DASHBOARD GRID */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* CARD STYLING */
+.card {
+  background: #161b22;
+  border-radius: 28px;
+  padding: 35px;
+  border: 1px solid #30363d;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  border-color: #00d2ff;
+  box-shadow: 0 20px 50px rgba(0, 210, 255, 0.2);
+}
+
+.icon { 
+  font-size: 3.5rem; 
+  margin-bottom: 15px; 
+  display: block;
+}
+
+/* HEART RATE PULSE ANIMATION */
+.pulse {
+  animation: heartBeat 1.2s infinite;
+}
+
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.25); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.18); }
+  60% { transform: scale(1); }
+}
+
+.value { 
+  font-size: 4rem; 
+  font-weight: 900; 
+  line-height: 1;
+}
+
+.value span { 
+  font-size: 1.2rem; 
+  color: #8b949e; 
+  margin-left: 8px; 
+  font-weight: 400;
+}
+
+/* PROGRESS BAR */
+.progress-container {
+  background: #30363d;
+  height: 14px;
+  border-radius: 7px;
+  margin: 25px 0 10px 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+  height: 100%;
+  border-radius: 7px;
+  transition: width 1.2s ease-out;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+.goal-text {
+    color: #8b949e;
+    font-size: 0.9rem;
+}
+
+/* FINISH BUTTON */
+.finish-btn {
+  margin-top: 50px;
+  padding: 20px 50px;
+  background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  color: #000;
+  border: none;
+  border-radius: 60px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.finish-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 210, 255, 0.6);
+}
+
+/* MODAL OVERLAY */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.85);
-  display: flex; justify-content: center; align-items: center;
-  z-index: 100;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
 }
 
 .modal-content {
-  background: #1a1a1a;
-  padding: 30px;
-  border-radius: 20px;
+  background: #161b22;
+  padding: 45px;
+  border-radius: 35px;
   border: 2px solid #00d2ff;
-  width: 90%; max-width: 400px;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 0 50px rgba(0, 210, 255, 0.2);
 }
 
-/* Simple CSS Chart */
+.modal-content h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* BAR CHART STYLES */
 .bar-chart {
   display: flex;
   align-items: flex-end;
-  justify-content: space-around;
-  height: 150px;
-  margin: 20px 0;
-  background: #222;
-  border-radius: 10px;
-  padding: 10px;
+  justify-content: space-evenly;
+  height: 200px;
+  background: #0d1117;
+  border-radius: 20px;
+  padding: 30px 20px;
+  margin: 30px 0;
+  border: 1px solid #30363d;
 }
 
 .bar {
-  width: 50px;
-  border-radius: 5px 5px 0 0;
+  width: 70px;
+  border-radius: 12px 12px 0 0;
   position: relative;
-  transition: height 1s ease;
+  transition: height 1.5s ease-in-out;
 }
 
-.bar span {
-  position: absolute; bottom: -25px; left: 0; width: 100%; font-size: 12px;
+.bar span { 
+  position: absolute; 
+  bottom: -35px; 
+  left: 0; 
+  width: 100%; 
+  font-size: 14px; 
+  color: #8b949e;
+  font-weight: bold;
 }
 
-.goal-bar { background: #444; }
-.current-bar { background: linear-gradient(to top, #00d2ff, #3a7bd5); }
-
-.finish-btn {
-  margin-top: 30px; padding: 15px 30px;
-  background: #00d2ff; color: black;
-  border: none; border-radius: 30px;
-  font-weight: bold; cursor: pointer;
+.goal-bar { background: #30363d; height: 100%; }
+.current-bar { 
+    background: linear-gradient(to top, #00d2ff, #0072ff); 
+    box-shadow: 0 0 25px rgba(0, 210, 255, 0.6); 
 }
 
 .close-btn {
-  margin-top: 20px; padding: 10px 20px;
-  background: #ff4757; color: white;
-  border: none; border-radius: 10px;
+  margin-top: 30px;
+  padding: 15px 35px;
+  background: #f85149;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.close-btn:hover {
+    background: #da3633;
 }
