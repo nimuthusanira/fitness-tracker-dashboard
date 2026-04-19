@@ -15,7 +15,6 @@ function App() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Connect to your specific Firebase path
     const healthRef = ref(db, 'sensorData');
     onValue(healthRef, (snapshot) => {
       const val = snapshot.val();
@@ -23,15 +22,13 @@ function App() {
     });
   }, []);
 
-  // Professional calculations
   const distanceKm = (data.steps * 0.75 / 1000).toFixed(2);
   const progressPercent = Math.min((data.steps / stepGoal) * 100, 100);
 
-  // Health Status Logic
   const getStatusText = () => {
-    if (data.heart_rate === 0) return "WAITING FOR DATA...";
-    if (data.heart_rate > 100) return "HIGH INTENSITY";
-    return "HEALTHY / STABLE";
+    if (data.heart_rate === 0) return "WAITING FOR SENSOR...";
+    if (data.heart_rate > 100 || data.body_temp > 38) return "HIGH INTENSITY DETECTED";
+    return "SYSTEM STABLE / HEALTHY";
   };
 
   return (
@@ -39,35 +36,36 @@ function App() {
       <header className="App-header">
         <h1 className="title">VITAL-TRACE PRO</h1>
         
-        <div className="status-bar">
-           {getStatusText()}
-        </div>
+        <div className="status-bar">{getStatusText()}</div>
 
         <div className="goal-setter">
           <label>Target Steps: </label>
-          <input 
-            type="number" 
-            value={stepGoal} 
-            onChange={(e) => setStepGoal(e.target.value)} 
-          />
+          <input type="number" value={stepGoal} onChange={(e) => setStepGoal(e.target.value)} />
         </div>
 
         <div className="dashboard-grid">
-          {/* Heart Rate Section */}
+          {/* Heart Rate */}
           <div className="card">
             <div className="icon pulse">❤️</div>
             <h3>Heart Rate</h3>
             <div className="value">{data.heart_rate} <span>BPM</span></div>
           </div>
 
-          {/* Activity/Distance Section */}
+          {/* Body Temperature - ADDED BACK HERE */}
+          <div className="card">
+            <div className="icon">🌡️</div>
+            <h3>Body Temp</h3>
+            <div className="value">{data.body_temp.toFixed(1)} <span>°C</span></div>
+          </div>
+
+          {/* Distance */}
           <div className="card">
             <div className="icon">🏃‍♂️</div>
             <h3>Distance</h3>
             <div className="value">{distanceKm} <span>KM</span></div>
           </div>
 
-          {/* Steps & Progress Section */}
+          {/* Steps Progress */}
           <div className="card">
             <div className="icon">👟</div>
             <h3>Total Steps</h3>
@@ -75,10 +73,10 @@ function App() {
             <div className="progress-container">
               <div className="progress-bar" style={{ width: `${progressPercent}%` }}></div>
             </div>
-            <p className="goal-text">{progressPercent.toFixed(1)}% of Daily Goal</p>
+            <p className="goal-text">{progressPercent.toFixed(1)}% of Goal</p>
           </div>
 
-          {/* Live GPS & Map Section */}
+          {/* GPS & Map */}
           <div className="card map-card">
             <div className="icon">📍</div>
             <h3>Live Location</h3>
@@ -87,7 +85,7 @@ function App() {
               <p>LNG: {data.lng.toFixed(5)}</p>
             </div>
             <a 
-              href={`https://www.google.com/maps/search/?api=1&query=${data.lat},${data.lng}`} 
+              href={`https://www.google.com/maps?q=${data.lat},${data.lng}`} 
               target="_blank" 
               rel="noreferrer" 
               className="map-btn"
@@ -101,21 +99,18 @@ function App() {
           GENERATE SESSION REPORT
         </button>
 
-        {/* Professional Summary Modal */}
         {showModal && (
           <div className="modal-overlay">
             <div className="modal-content">
               <h2>Session Summary 📊</h2>
               <div className="bar-chart">
                 <div className="bar goal-bar"><span>GOAL</span></div>
-                <div className="bar current-bar" style={{height: `${progressPercent}%`}}>
-                   <span>STEPS</span>
-                </div>
+                <div className="bar current-bar" style={{height: `${progressPercent}%`}}><span>STEPS</span></div>
               </div>
               <div className="summary-stats">
-                <p>Total Distance Covered: <strong>{distanceKm} KM</strong></p>
-                <p>Current Heart Rate: <strong>{data.heart_rate} BPM</strong></p>
-                <p>Steps Taken: <strong>{data.steps}</strong></p>
+                <p>Avg Temp: <strong>{data.body_temp.toFixed(1)} °C</strong></p>
+                <p>Total Distance: <strong>{distanceKm} KM</strong></p>
+                <p>Peak Heart Rate: <strong>{data.heart_rate} BPM</strong></p>
               </div>
               <button className="close-btn" onClick={() => setShowModal(false)}>BACK TO DASHBOARD</button>
             </div>
