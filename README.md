@@ -5,12 +5,9 @@ A responsive web application built with React to help users monitor workouts, tr
 ---
 
 ## 🚀 Live Demo
-* **Live Application:** [View Live on Vercel](https://your-vercel-deployment-url.vercel.app) *(Replace with your actual link)*
+* **Live Application:** [View Live on Vercel](https://fitness-tracker-dashboard.vercel.app/) 
 
----
 
-## 📸 Screenshots
-*(Add screenshots of your dashboard here once uploaded, e.g., using `![Dashboard Overview](./screenshots/dashboard.png)`)*
 
 ---
 
